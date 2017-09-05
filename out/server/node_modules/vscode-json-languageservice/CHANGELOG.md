@@ -1,3 +1,8 @@
+2.0.15 / 2017-08-28
+==================
+  * New API `LanguageService.findDocumentColors` returning the location and value of all colors in a document. 
+  * New API types `ColorInformation` and `Color` added.
+  * Deprecated `LanguageService.findColorSymbols`. Use `LanguageService.findDocumentColors` instead.
 
 2.0.8 /
 ==================

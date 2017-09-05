@@ -261,11 +261,21 @@ function validateTextDocument(textDocument: TextDocument): void {
 		if(yDoc.errors.length != 0){
 			diagnostics = yDoc.errors.map(error =>{
 				let mark = error.mark;
+				let start = textDocument.positionAt(mark.position);
+				let end = { line: mark.line, character: mark.column }
+				/*
+				 * Fix for the case when textDocument.positionAt(mark.position) is > end
+				 */
+				if(end.line < start.line || (end.line <= start.line && end.character < start.line)){
+					let temp = start;
+					start = end;
+					end = temp;
+				}
 				return {
 					severity: DiagnosticSeverity.Error,
 					range: {
-								start: textDocument.positionAt(mark.position),
-								end: { line: mark.line, character: mark.column }
+								start: start,
+								end: end
 							},
 					message: error.reason
 				}
